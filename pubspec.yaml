@@ -19,6 +19,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite: any
+  path_provider: any
+  page_transition: any
+  countdown: any
+  audioplayers: any
+  xform: ^0.2.0
+  flutter_svg: any
+  pdf: any
+  esys_flutter_share: any
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -70,3 +79,23 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+assets:
+  - assets/images/EsquinaSup.png
+  - assets/images/EsquinaSup.svg
+  - assets/images/EsquinaInf.png
+  - assets/images/EsquinaInf.svg
+  - assets/images/Logo.png
+  - assets/images/Logo.svg
+  - assets/images/Splash.svg
+  - assets/images/LogoSmall.png
+  - assets/gif/electric3.gif
+  - assets/gif/electric4.gif
+  - assets/sonidos/break.mp3
+  - assets/sonidos/correct.mp3
+  - assets/sonidos/lets_play.mp3
+  - assets/sonidos/main.mp3
+  - assets/sonidos/main_theme.mp3
+  - assets/sonidos/wrong.mp3
+  - assets/sonidos/final_answer.mp3
+  - assets/font/OpenSans.ttf
