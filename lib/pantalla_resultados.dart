@@ -1,19 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:wwtbam_flutter/models/PreguntaModel.dart';
 import 'package:wwtbam_flutter/models/PreguntaRespuestasModel.dart';
-import 'package:wwtbam_flutter/models/RespuestaModel.dart';
 import 'package:wwtbam_flutter/pantalla_bienvenida.dart';
 // import 'package:wwtbam_flutter/pantalla_detalles_partida.dart';
 import 'package:wwtbam_flutter/sounds/player.dart';
 import 'components/LogoSVG.dart';
 import 'components/label_premio.dart';
 import 'components/line_painter.dart';
-// import 'components/list_tile.dart';
-import 'database/Database.dart';
-import 'models/PartidaModel.dart';
-import 'models/RespuestasPartidaModel.dart';
 
 class PantallaResultados extends StatefulWidget {
   final preguntas;

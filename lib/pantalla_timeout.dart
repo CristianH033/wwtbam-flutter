@@ -7,8 +7,6 @@ import 'package:wwtbam_flutter/pantalla_resultados.dart';
 import 'package:wwtbam_flutter/sounds/player.dart';
 import 'components/LogoSVG.dart';
 import 'components/line_painter.dart';
-import 'database/Database.dart';
-import 'models/RespuestaModel.dart';
 
 class PantallaTimeOut extends StatefulWidget {
   final preguntas, index;

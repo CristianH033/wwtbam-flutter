@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wwtbam_flutter/database/Database.dart';
-import 'package:wwtbam_flutter/models/PreguntaModel.dart';
 import 'package:wwtbam_flutter/models/PreguntaRespuestasModel.dart';
 import 'package:wwtbam_flutter/models/RespuestaModel.dart';
 import 'package:wwtbam_flutter/pantalla_pregunta.dart';
-import 'package:wwtbam_flutter/pantalla_resultados.dart';
 import 'package:wwtbam_flutter/sounds/player.dart';
 import 'components/LogoSVG.dart';
 
