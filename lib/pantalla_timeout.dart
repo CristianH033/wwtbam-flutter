@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wwtbam_flutter/components/label_wrong.dart';
 import 'package:wwtbam_flutter/pantalla_pregunta.dart';
-import 'package:wwtbam_flutter/pantalla_premio.dart';
 import 'package:wwtbam_flutter/pantalla_resultados.dart';
 import 'package:wwtbam_flutter/sounds/player.dart';
 import 'components/LogoSVG.dart';
@@ -12,14 +11,14 @@ import 'database/Database.dart';
 import 'models/RespuestaModel.dart';
 
 class PantallaTimeOut extends StatefulWidget {
-  final logRespuestas, preguntas, index;
-  PantallaTimeOut({Key key, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);  
+  final preguntas, index;
+  PantallaTimeOut({Key key, @required this.preguntas, @required this.index}) : super(key: key);  
   @override
   _PantallaTimeOutState createState() => new _PantallaTimeOutState();
 }
 
 class _PantallaTimeOutState extends State<PantallaTimeOut> {
-  var logRespuestas, preguntas, index;
+  var preguntas, index;
   int _correctas = 0;
   String _textoPremio = "";  
   
@@ -28,13 +27,10 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
     // TODO: implement initState
     super.initState();
     Player.stop();
-    Player.playWrong();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => startUp(context));
+    Player.playWrong();    
   }
   @override
   Widget build(BuildContext context) {
-    logRespuestas = widget.logRespuestas;
     preguntas = widget.preguntas;
     index = widget.index;
     MediaQueryData queryData = MediaQuery.of(context);
@@ -119,60 +115,21 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
         curve: Curves.bounceOut,
         duration: Duration(seconds: 1),
         alignment: Alignment.topCenter,
-        child: new PantallaPregunta(logRespuestas: logRespuestas, preguntas: preguntas, index: index+1)
+        child: new PantallaPregunta(preguntas: preguntas, index: index+1)
       ),
     );
       
     }else{
-      if(_correctas >= 2){
-         Navigator.pushReplacement(
+      Navigator.pushReplacement(
         context,
         PageTransition(
           type: PageTransitionType.fade,
           // curve: Curves.bounceOut,
           duration: Duration(seconds: 1),
           alignment: Alignment.topCenter,
-          child: new PantallaPremio(logRespuestas: logRespuestas, index: index, preguntas: preguntas, textoPremio: _textoPremio,),
+          child: new PantallaResultados(preguntas: preguntas),
           ),
-        );
-      }else{
-        Navigator.pushReplacement(
-        context,
-        PageTransition(
-          type: PageTransitionType.fade,
-          // curve: Curves.bounceOut,
-          duration: Duration(seconds: 1),
-          alignment: Alignment.topCenter,
-          child: new PantallaResultados(logRespuestas: logRespuestas),
-          ),
-        );
-      }      
+        );   
     }
-  }
-
-  startUp(BuildContext context) async {
-    print("asyncOne start");
-    int count = 0;
-    for (int id in logRespuestas){
-      Respuesta r =await getRespuesta(id);
-      if(r.correcta) count++;
-    }
-    print("asyncOne end");
-    print("Correctas: $count");
-    setState(() {
-      _correctas = count; 
-      if(_correctas >= 2){
-        _textoPremio = "GANASTE UNA MANILLA";
-      }
-
-      if(_correctas >= 6){
-        _textoPremio = "GANASTE UNA MOCHILA";
-      }
-    });
-  }
-
-  Future<Respuesta> getRespuesta(id) async {
-    Respuesta r = await DBProvider.db.getRespuesta(id);
-    return r;
   }
 }

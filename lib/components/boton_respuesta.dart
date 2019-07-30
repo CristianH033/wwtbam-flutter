@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:wwtbam_flutter/models/RespuestaModel.dart';
 
 class BotonRespuesta extends StatelessWidget {
   // a property on this class
-  final Respuesta respuesta;
-  final void Function( Respuesta respuesta) callback;
+  final String texto;
+  final int idx;
+  final void Function( int idx ) callback;
   // a constructor for this class
-  BotonRespuesta(this.callback, this.respuesta);
+  BotonRespuesta(this.callback, this.texto, this.idx);
 
   Widget build(context) {
     MediaQueryData queryData = MediaQuery.of(context);
@@ -17,7 +17,7 @@ class BotonRespuesta extends StatelessWidget {
       // height: 70,
       child: RaisedButton(
         key: null,
-        onPressed: () => callback(respuesta),
+        onPressed: () => callback(idx),
         highlightColor: Color.fromRGBO(0, 214, 46, 1),
         splashColor: Color.fromRGBO(0, 214, 46, 1),
         textColor: Colors.white,
@@ -31,7 +31,7 @@ class BotonRespuesta extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(40.0))),
         color: Colors.black,
         child: new Text(
-          respuesta.texto,
+          texto,
           textAlign: TextAlign.center,
           style: new TextStyle(
               fontSize: 18.0,

@@ -87,7 +87,8 @@ class DBProvider {
         await db.execute(
             "INSERT INTO preguntas"
             "(id, texto, categoria)"
-            "VALUES (1, 'La brecha inmunológica se presenta a que edad:', 'Calostro'),"
+            "VALUES" 
+            "(1, 'La brecha inmunológica se presenta a que edad:', 'Calostro'),"
             "(2, 'Qué sucede en el intestino después del estrés:', 'Calostro'),"
             "(3, 'Qué es Optistar:', 'Calostro'),"
             "(4, 'Qué es Purina Pro Plan Puppy con Optistar:', 'Calostro'),"
@@ -104,7 +105,8 @@ class DBProvider {
         await db.execute(
             "INSERT INTO respuestas"
             "(id, texto, correcta, pregunta_id)"
-            "VALUES (1,'A los 5 años.',0,1),"
+            "VALUES "
+            "(1,'A los 5 años.',0,1),"
             "(2,'A los 5 meses.',0,1),"
             "(3,'A los 45 días.',1,1),"
             "(4,'No sucede nada, nadie se da cuenta.',0,2),"

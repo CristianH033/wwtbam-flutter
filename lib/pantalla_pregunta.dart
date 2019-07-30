@@ -11,20 +11,19 @@ import 'components/LogoSVG.dart';
 import 'components/boton_respuesta.dart';
 import 'components/label_pregunta.dart';
 import 'components/line_painter.dart';
-import 'database/Database.dart';
 import 'models/RespuestaModel.dart';
 import 'package:countdown/countdown.dart';
 
 
 class PantallaPregunta extends StatefulWidget {
-  final logRespuestas, preguntas, index;
-  PantallaPregunta({Key key, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);
+  final preguntas, index;
+  PantallaPregunta({Key key, @required this.preguntas, @required this.index}) : super(key: key);
   @override
   _PantallaPreguntaState createState() => new _PantallaPreguntaState();
 }
 
 class _PantallaPreguntaState extends State<PantallaPregunta> {
-  var logRespuestas, preguntas, index, tiempo = 320, tiempoRestante = 320, w;
+  var preguntas, index, tiempo = 32, tiempoRestante = 32, w;
   // CountDown cd = CountDown(Duration(seconds : 30));
   var sub;
   @override
@@ -53,18 +52,17 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
             curve: Curves.bounceOut,
             duration: Duration(seconds: 1),
             alignment: Alignment.topCenter,
-            child: PantallaTimeOut(logRespuestas: logRespuestas, preguntas: preguntas, index: index)
+            child: PantallaTimeOut(preguntas: preguntas, index: index)
           ),
         );
       });
   }
   @override
   Widget build(BuildContext context) {
-    logRespuestas = widget.logRespuestas;
     preguntas = widget.preguntas;
     index = widget.index;
     MediaQueryData queryData = MediaQuery.of(context);
-    w = (queryData.size.width * ((tiempoRestante*100)/320))/100;
+    w = (queryData.size.width * ((tiempoRestante*100)/32))/100;
     return new WillPopScope(
       key: null,
       onWillPop: () {
@@ -72,7 +70,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
       },
       child: new Scaffold(
         body: FutureBuilder<List<Respuesta>>(
-        future: DBProvider.db.getAllRespuestasPregunta(preguntas[index].id),
+        future: gr(),
         builder: (BuildContext context, AsyncSnapshot<List<Respuesta>> respuestas) {
           if (respuestas.hasData) {
             return new Column(
@@ -108,16 +106,12 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             new Image.asset('assets/images/${preguntas[index].categoria}.png', width: queryData.size.width/5,),
-                            new Text(preguntas[index].categoria, style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),),
+                            new Text(preguntas[index].categoria.toUpperCase(), style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),),
                           ]
                         ),
                         new LogoSVG(width: queryData.size.width/3,)
                       ],
                     )
-                    // child: new Image(
-                    //   image:  new LogoSVG(),
-                    //   width: queryData.size.width/1.6,
-                    // )
                   ),
                 ),
                 Spacer(flex: 1),
@@ -157,12 +151,11 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                           ),
                         ),
                       ),                      
-                      new BotonRespuesta(buttonPressed, respuestas.data[0]),
+                      new BotonRespuesta(buttonPressed, respuestas.data[0].texto, 0),
                       new Container(
                         width: 45,
                         height: 45,
                       )
-                      // new BotonRespuesta(buttonPressed, respuestas.data[1]),
                     ],
                   )
                 ),
@@ -191,7 +184,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                           ),
                         ),
                       ),                      
-                      new BotonRespuesta(buttonPressed, respuestas.data[1]),
+                      new BotonRespuesta(buttonPressed, respuestas.data[1].texto, 1),
                       new Container(
                         width: 45,
                         height: 45,
@@ -224,7 +217,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                           ),
                         ),
                       ),                      
-                      new BotonRespuesta(buttonPressed, respuestas.data[2]),
+                      new BotonRespuesta(buttonPressed, respuestas.data[2].texto, 2),
                       new Container(
                         width: 45,
                         height: 45,
@@ -233,42 +226,6 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                   )
                 ),
                 Spacer(flex: 1),
-//                CustomPaint(
-//                    painter: LinePainter(),
-//                    child: new Row(
-//                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                      mainAxisSize: MainAxisSize.max,
-//                      crossAxisAlignment: CrossAxisAlignment.center,
-//                      children: <Widget>[
-//                        new BotonRespuesta(buttonPressed, respuestas.data[2]),
-////                        new BotonRespuesta(buttonPressed, respuestas.data[3]),
-//                      ],
-//                    )
-//                ),
-//                Spacer(flex: 1),
-//                CustomPaint(
-//                    painter: LinePainter(),
-//                    child: new Row(
-//                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                      mainAxisSize: MainAxisSize.max,
-//                      crossAxisAlignment: CrossAxisAlignment.center,
-//                      children: <Widget>[
-////                        new BotonRespuesta(buttonPressed, respuestas.data[2]),
-//                        new BotonRespuesta(buttonPressed, respuestas.data[3]),
-//                      ],
-//                    )
-//                ),
-//                Spacer(flex: 1),
-//                new Material(
-//                  shape: const BeveledRectangleBorder(
-//                    borderRadius: BorderRadius.all(Radius.circular(50)),
-//                    side: BorderSide(color: Colors.blue, width: 3),
-//                  ),
-//                  child: new Container(
-//                      padding: EdgeInsets.only(right: 20, left: 20, bottom: 20, top: 20),
-//                      child: new Text('$tiempoRestante', style: new TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)
-//                  )
-//                ),
                 new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -314,17 +271,11 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
     return false;
   }
 
-  void buttonPressed(Respuesta respuesta ) {
-    // Navigator.pushReplacement(
-    //   context,
-    //   PageTransition(
-    //     type: PageTransitionType.size,
-    //     curve: Curves.bounceOut,
-    //     duration: Duration(seconds: 1),
-    //     alignment: Alignment.topCenter,
-    //     child: PantallaPremio()
-    //   ),
-    // );
+  Future<List<Respuesta>> gr() async {
+    return await this.preguntas[index].respuestas;
+  }
+
+  void buttonPressed(int idx ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -340,10 +291,8 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                 sub.cancel();
                 Player.stop();
                 Navigator.of(context).pop();
-                logRespuestas.add(respuesta.id);
-                print(logRespuestas);
-                print("index: $index");
-                if(respuesta.correcta){
+                preguntas[index].respuestas[idx].seleccionada = true;
+                if(preguntas[index].respuestas[idx].correcta){
                   Navigator.pushReplacement(
                     context,
                     PageTransition(
@@ -351,7 +300,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                       curve: Curves.bounceOut,
                       duration: Duration(seconds: 1),
                       alignment: Alignment.topCenter,
-                      child: new PantallaCorrecto(logRespuestas: logRespuestas, preguntas: preguntas, index: index)
+                      child: new PantallaCorrecto(preguntas: preguntas, index: index)
                     ),
                   );
                 }else{
@@ -362,7 +311,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                       curve: Curves.bounceOut,
                       duration: Duration(seconds: 1),
                       alignment: Alignment.topCenter,
-                      child: PantallaWrong(logRespuestas: logRespuestas, preguntas: preguntas, index: index)
+                      child: PantallaWrong(preguntas: preguntas, index: index)
                     ),
                   );
                 }

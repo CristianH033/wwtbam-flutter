@@ -15,12 +15,14 @@ class Respuesta {
   int id;
   String texto;
   bool correcta;
+  bool seleccionada;
   int preguntaId;
 
   Respuesta({
     this.id,
     this.texto,
     this.correcta,
+    this.seleccionada,
     this.preguntaId
   });
 
@@ -28,6 +30,7 @@ class Respuesta {
         id: json["id"],
         texto: json["texto"],
         correcta: json["correcta"] == 1,
+        seleccionada: json["seleccionada"] == 1,
         preguntaId: json["pregunta_id"]
       );
 
@@ -35,6 +38,7 @@ class Respuesta {
         "id": id,
         "texto": texto,
         "correcta": correcta,
+        "seleccionada": seleccionada,
         "pregunta_id": preguntaId
       };
 }

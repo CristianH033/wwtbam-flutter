@@ -16,27 +16,25 @@ import 'models/PartidaModel.dart';
 import 'models/RespuestasPartidaModel.dart';
 
 class PantallaResultados extends StatefulWidget {
-  final partidaActual, logRespuestas;
-  PantallaResultados({Key key, @required this.partidaActual, @required this.logRespuestas}) : super(key: key);
+  final preguntas;
+  PantallaResultados({Key key, @required this.preguntas}) : super(key: key);
   @override
   _PantallaResultadosState createState() => new _PantallaResultadosState();
 }
 
 class _PantallaResultadosState extends State<PantallaResultados> {
-  var partidaActual, logRespuestas;
+  var preguntas;
   @override
   void initState() {
     super.initState();
     Player.stop();
     Player.playIntro();
 
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => guardarPartida(context));
+    // WidgetsBinding.instance.addPostFrameCallback((_) => guardarPartida(context));
   }
   @override
   Widget build(BuildContext context) {
-    partidaActual = widget.partidaActual;
-    logRespuestas = widget.logRespuestas;
+    preguntas = widget.preguntas;
     MediaQueryData queryData = MediaQuery.of(context);
 
     return new WillPopScope(
@@ -85,15 +83,47 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                             physics: BouncingScrollPhysics(),
                             itemCount: preguntas.data.length,
                             separatorBuilder: (BuildContext context, int index) => Divider(),
+                            padding: EdgeInsets.all(10),
                             itemBuilder: (BuildContext context, int index) {
                               PreguntaRespuestas pregunta = preguntas.data[index];
                               // return ListTilePartida(entrarPartida, partida, partidaActual);
-                              return ListTile(
-                                title: Text(pregunta.texto),
-                                subtitle: Text("R: "+pregunta.respuestas[0].texto,
-                                  style: TextStyle(color: pregunta.respuestas[0].correcta ? Colors.green : Colors.red),
-                                ),
+                              return Card(
+                                elevation: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    ListTile(
+                                      leading: Icon(Icons.check_circle, color: Colors.grey,),
+                                      title: new Text(pregunta.texto, style: TextStyle(fontSize: 20),),
+                                    ),                                    
+                                    // new Divider(color: Colors.grey,),
+                                    new Container(
+                                      decoration: new BoxDecoration (
+                                          color: pregunta.respuestas[0].seleccionada ? pregunta.respuestas[0].correcta ? Colors.green.shade200 : Colors.red.shade200 : Colors.white
+                                      ),
+                                      child: new ListTile(title: Text(pregunta.respuestas[0].texto), contentPadding: EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3))
+                                    ),
+                                    new Container(
+                                      decoration: new BoxDecoration (
+                                          color: pregunta.respuestas[1].seleccionada ? pregunta.respuestas[1].correcta ? Colors.green.shade200 : Colors.red.shade200 : Colors.white
+                                      ),
+                                      child: new ListTile(title: Text(pregunta.respuestas[1].texto), contentPadding: EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3)),
+                                    ),
+                                    new Container(
+                                      decoration: new BoxDecoration (
+                                          color: pregunta.respuestas[2].seleccionada ? pregunta.respuestas[2].correcta ? Colors.green.shade200 : Colors.red.shade200 : Colors.white
+                                      ),
+                                      child: new ListTile(title: Text(pregunta.respuestas[2].texto), contentPadding: EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3)),
+                                    ),
+                                  ],
+                                )
                               );
+                              // return ListTile(
+                                // title: Text(pregunta.texto),
+                                // subtitle: Text("R: "+pregunta.respuestas[0].seleccionada.toString(),
+                                  // style: TextStyle(color: pregunta.respuestas[0].correcta ? Colors.green : Colors.red),
+                                // ),
+                              // );
                             }
                           )
                         );
@@ -144,59 +174,8 @@ class _PantallaResultadosState extends State<PantallaResultados> {
     return true;
   }
 
-  Future<List<RespuestasPartida>> getResultados(){
-    return DBProvider.db.getAllRespuestasPartidas();
-  }
-
   Future<List<PreguntaRespuestas>> getPreguntasRespuestas() async{
-    List<PreguntaRespuestas> preguntas = new List<PreguntaRespuestas>();
-    // logRespuestas.forEach((respuesta) async{
-    for(var respuesta in logRespuestas) {
-      // print(respuesta);
-      Respuesta r = await DBProvider.db.getRespuesta(respuesta);
-      Pregunta p = await DBProvider.db.getPregunta(r.preguntaId);
-      List<Respuesta> respuestas = new List<Respuesta>();
-      respuestas.add(r);
-      // print(r);
-      preguntas.add(new PreguntaRespuestas(id: p.id, categoria: p.categoria, texto: p.texto, respuestas: respuestas ) );
-      // print(preguntas.length);
-    }
-    // print(preguntas.length);
     return preguntas;
-  }
-
-  Future<List<Respuesta>> getRespuestas() async{
-    List<Respuesta> respuestas = new List<Respuesta>();
-    logRespuestas.forEach((respuesta) async{
-      Respuesta r = await DBProvider.db.getRespuesta(respuesta);
-      respuestas.add(r);
-    });
-
-    return respuestas;
-  }
-
-  void guardarPartida(BuildContext context) async {
-    // print(logRespuestas);
-    // print("Partida actual: $partidaActual");
-    // print("Guardando...");
-    await DBProvider.db.deleteAllRespuestasPartidas();
-    await DBProvider.db.deleteAllPartidas();
-    Partida nuevaPartida = new Partida();
-    var idPartida = await DBProvider.db.newPartida(nuevaPartida);
-    logRespuestas.forEach((respuesta){
-      RespuestasPartida respuestaPartida = new RespuestasPartida(
-        respuestaId: respuesta,
-        partidaId: idPartida
-      );
-      // print(respuestaPartida);
-      // print(respuestaPartida.respuestaId);
-      guardarRespuesta(respuestaPartida);
-    });
-    // print("Guardado");
-  }
-
-  Future guardarRespuesta(RespuestasPartida r) async {
-    await DBProvider.db.newRespuestasPartida(r);
   }
 
   void buttonPressed() {
