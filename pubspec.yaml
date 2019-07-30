@@ -80,22 +80,13 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 
-assets:
-  - assets/images/EsquinaSup.png
-  - assets/images/EsquinaSup.svg
-  - assets/images/EsquinaInf.png
-  - assets/images/EsquinaInf.svg
-  - assets/images/Logo.png
-  - assets/images/Logo.svg
-  - assets/images/Splash.svg
-  - assets/images/LogoSmall.png
-  - assets/gif/electric3.gif
-  - assets/gif/electric4.gif
-  - assets/sonidos/break.mp3
-  - assets/sonidos/correct.mp3
-  - assets/sonidos/lets_play.mp3
-  - assets/sonidos/main.mp3
-  - assets/sonidos/main_theme.mp3
-  - assets/sonidos/wrong.mp3
-  - assets/sonidos/final_answer.mp3
-  - assets/font/OpenSans.ttf
+  assets:
+    - assets/images/Calostro.png
+    - assets/images/Spirulina.png
+    - assets/images/MCT.png
+    - assets/images/Logo.svg
+    - assets/font/Antenna-Black.otf
+    - assets/font/Antenna-Bold.otf
+    - assets/font/Antenna-Light.otf
+    - assets/font/Antenna-Regular.otf
+    - assets/font/Antenna-ExtraLight.otf

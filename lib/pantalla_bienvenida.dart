@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wwtbam_flutter/database/Database.dart';
+import 'package:wwtbam_flutter/models/PreguntaModel.dart';
+import 'package:wwtbam_flutter/pantalla_pregunta.dart';
 import 'package:wwtbam_flutter/pantalla_resultados.dart';
 import 'package:wwtbam_flutter/sounds/player.dart';
 import 'components/LogoSVG.dart';
@@ -171,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     );
   }
 
-  void buttonPressed() {
+  void buttonPressed() async {
     // showDialog(
     //   context: context,
     //   builder: (BuildContext context) {
@@ -199,9 +202,31 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     // );
 
     // Player.stop();
+
+    List<Pregunta> preguntas = await DBProvider.db.getAllPreguntas();
+
+    preguntas.shuffle();
+
+    // Partida partida = new Partida(
+    //   jugadorId: nuevoJugador.id
+    // );
+    Player.stop();
+    // Player.playLetsPlay();
+    // Navigator.pushReplacement(
+    //   context,
+    //   PageTransition(
+    //     type: PageTransitionType.size,
+    //     curve: Curves.bounceOut,
+    //     duration: Duration(seconds: 1),
+    //     alignment: Alignment.topCenter,
+    //     child: new PantallaPregunta(logRespuestas: [], preguntas: preguntas, index: 0)
+    //   ),
+    // );
+
+
     Navigator.push(
       context,
-      CupertinoPageRoute(builder: (context) => new PageRegistro()),
+      CupertinoPageRoute(builder: (context) => new PantallaPregunta(logRespuestas: [], preguntas: preguntas, index: 0)),
       // MaterialPageRoute(builder: (context) => Pantalla()),
     );
   }

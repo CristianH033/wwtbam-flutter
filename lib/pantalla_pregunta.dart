@@ -12,22 +12,19 @@ import 'components/boton_respuesta.dart';
 import 'components/label_pregunta.dart';
 import 'components/line_painter.dart';
 import 'database/Database.dart';
-import 'models/PreguntaModel.dart';
 import 'models/RespuestaModel.dart';
-import 'pantalla_premio.dart';
 import 'package:countdown/countdown.dart';
-import 'package:flutter/material.dart';
 
 
 class PantallaPregunta extends StatefulWidget {
-  final partida, logRespuestas, preguntas, index;
-  PantallaPregunta({Key key, @required this.partida, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);
+  final logRespuestas, preguntas, index;
+  PantallaPregunta({Key key, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);
   @override
   _PantallaPreguntaState createState() => new _PantallaPreguntaState();
 }
 
 class _PantallaPreguntaState extends State<PantallaPregunta> {
-  var partida, logRespuestas, preguntas, index, tiempo = 32, tiempoRestante = 32, w;
+  var logRespuestas, preguntas, index, tiempo = 320, tiempoRestante = 320, w;
   // CountDown cd = CountDown(Duration(seconds : 30));
   var sub;
   @override
@@ -56,19 +53,18 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
             curve: Curves.bounceOut,
             duration: Duration(seconds: 1),
             alignment: Alignment.topCenter,
-            child: PantallaTimeOut(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index)
+            child: PantallaTimeOut(logRespuestas: logRespuestas, preguntas: preguntas, index: index)
           ),
         );
       });
   }
   @override
   Widget build(BuildContext context) {
-    partida = widget.partida;
     logRespuestas = widget.logRespuestas;
     preguntas = widget.preguntas;
     index = widget.index;
     MediaQueryData queryData = MediaQuery.of(context);
-    w = (queryData.size.width * ((tiempoRestante*100)/32))/100;
+    w = (queryData.size.width * ((tiempoRestante*100)/320))/100;
     return new WillPopScope(
       key: null,
       onWillPop: () {
@@ -115,7 +111,53 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
+                      new Container(
+                        width: 45,
+                        height: 45,
+                        child: new Center(
+                          child: Text("A", 
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white)
+                          )
+                        ),
+                        decoration: new BoxDecoration(
+                          color: Colors.black,
+                          border: Border.all(width: 3, color: Colors.grey),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(50)
+                          ),
+                        ),
+                      ),                      
                       new BotonRespuesta(buttonPressed, respuestas.data[0]),
+                      // new BotonRespuesta(buttonPressed, respuestas.data[1]),
+                    ],
+                  )
+                ),
+                Spacer(flex: 1),
+                CustomPaint(
+                  painter: LinePainter(),
+                  child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      new Container(
+                        width: 45,
+                        height: 45,
+                        child: new Center(
+                          child: Text("B", 
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white)
+                          )
+                        ),
+                        decoration: new BoxDecoration(
+                          color: Colors.black,
+                          border: Border.all(width: 3, color: Colors.grey),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(50)
+                          ),
+                        ),
+                      ),                      
                       new BotonRespuesta(buttonPressed, respuestas.data[1]),
                     ],
                   )
@@ -128,8 +170,24 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new BotonRespuesta(buttonPressed, respuestas.data[2]),
-                      new BotonRespuesta(buttonPressed, respuestas.data[3]),
+                      new Container(
+                        width: 45,
+                        height: 45,
+                        child: new Center(
+                          child: Text("C", 
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white)
+                          )
+                        ),
+                        decoration: new BoxDecoration(
+                          color: Colors.black,
+                          border: Border.all(width: 3, color: Colors.grey),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(50)
+                          ),
+                        ),
+                      ),                      
+                      new BotonRespuesta(buttonPressed, respuestas.data[2])
                     ],
                   )
                 ),
@@ -245,7 +303,6 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                 print(logRespuestas);
                 print("index: $index");
                 if(respuesta.correcta){
-                  print("Id de partida en pregunta: $partida");
                   Navigator.pushReplacement(
                     context,
                     PageTransition(
@@ -253,7 +310,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                       curve: Curves.bounceOut,
                       duration: Duration(seconds: 1),
                       alignment: Alignment.topCenter,
-                      child: new PantallaCorrecto(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index)
+                      child: new PantallaCorrecto(logRespuestas: logRespuestas, preguntas: preguntas, index: index)
                     ),
                   );
                 }else{
@@ -264,7 +321,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                       curve: Curves.bounceOut,
                       duration: Duration(seconds: 1),
                       alignment: Alignment.topCenter,
-                      child: PantallaWrong(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index)
+                      child: PantallaWrong(logRespuestas: logRespuestas, preguntas: preguntas, index: index)
                     ),
                   );
                 }

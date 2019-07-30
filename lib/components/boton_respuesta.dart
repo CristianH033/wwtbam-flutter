@@ -12,15 +12,16 @@ class BotonRespuesta extends StatelessWidget {
     MediaQueryData queryData = MediaQuery.of(context);
     // Pass the text down to another widget
     return new SizedBox(
-      width: (queryData.size.width/2) - ((10*(queryData.size.width/2))/100),
-      height: 70,
+      width: (queryData.size.width/1.2) - ((10*(queryData.size.width/2))/100),
+      // width: queryData.size.width - 50,
+      // height: 70,
       child: RaisedButton(
         key: null,
         onPressed: () => callback(respuesta),
         highlightColor: Color.fromRGBO(0, 214, 46, 1),
         splashColor: Color.fromRGBO(0, 214, 46, 1),
         textColor: Colors.white,
-        padding: EdgeInsets.only(right: 15, left: 15, bottom: 10, top: 10),
+        padding: EdgeInsets.only(right: 25, left: 25, bottom: 10, top: 10),
         shape: BeveledRectangleBorder(
             side: BorderSide(
               color: Colors.grey, //Color of the border
@@ -28,7 +29,7 @@ class BotonRespuesta extends StatelessWidget {
               width: 3, //width of the border
             ),
             borderRadius: BorderRadius.all(Radius.circular(40.0))),
-        color: Colors.blue,
+        color: Colors.black,
         child: new Text(
           respuesta.texto,
           textAlign: TextAlign.center,

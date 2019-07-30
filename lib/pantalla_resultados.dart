@@ -28,8 +28,8 @@ class _PantallaResultadosState extends State<PantallaResultados> {
     Player.stop();
     Player.playIntro();
 
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => guardarPartida(context));
+    // WidgetsBinding.instance
+    //     .addPostFrameCallback((_) => guardarPartida(context));
   }
   @override
   Widget build(BuildContext context) {

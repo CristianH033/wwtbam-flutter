@@ -7,18 +7,16 @@ import 'package:wwtbam_flutter/pantalla_resultados.dart';
 import 'package:wwtbam_flutter/sounds/player.dart';
 import 'components/label_premio.dart';
 import 'components/line_painter.dart';
-import 'database/Database.dart';
-import 'models/RespuestaModel.dart';
 
 class PantallaPremio extends StatefulWidget {
-  final partida, logRespuestas, preguntas, index, textoPremio;
-  PantallaPremio({Key key, @required this.partida, @required this.logRespuestas, @required this.preguntas, @required this.index, @required this.textoPremio}) : super(key: key);
+  final logRespuestas, preguntas, index, textoPremio;
+  PantallaPremio({Key key, @required this.logRespuestas, @required this.preguntas, @required this.index, @required this.textoPremio}) : super(key: key);
   @override
   _PantallaPremioState createState() => new _PantallaPremioState();
 }
 
 class _PantallaPremioState extends State<PantallaPremio> {
-  var partida, logRespuestas, preguntas, index, textoPremio;
+  var logRespuestas, preguntas, index, textoPremio;
   @override
   void initState() {
     // TODO: implement initState
@@ -28,7 +26,6 @@ class _PantallaPremioState extends State<PantallaPremio> {
   }
   @override
   Widget build(BuildContext context) {
-    partida = widget.partida;
     logRespuestas = widget.logRespuestas;
     preguntas = widget.preguntas;
     index = widget.index;
@@ -109,7 +106,7 @@ class _PantallaPremioState extends State<PantallaPremio> {
         curve: Curves.bounceOut,
         duration: Duration(seconds: 1),
         alignment: Alignment.topCenter,
-        child: new PantallaPregunta(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index+1)
+        child: new PantallaPregunta(logRespuestas: logRespuestas, preguntas: preguntas, index: index+1)
       ),
     );
       
@@ -121,7 +118,7 @@ class _PantallaPremioState extends State<PantallaPremio> {
         // curve: Curves.bounceOut,
         duration: Duration(seconds: 1),
         alignment: Alignment.topCenter,
-        child: new PantallaResultados(partidaActual: partida, logRespuestas: logRespuestas),
+        child: new PantallaResultados(logRespuestas: logRespuestas),
       ),
     );
     }

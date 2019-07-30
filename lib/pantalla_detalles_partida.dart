@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wwtbam_flutter/models/RespuestaModel.dart';
 import 'package:wwtbam_flutter/models/RespuestasPartidaModel.dart';
 import 'database/Database.dart';
 import 'models/PartidaModel.dart';
-import 'models/PreguntaModel.dart';
 
 class PantallaPartidaDetalles extends StatefulWidget {
   final partida;

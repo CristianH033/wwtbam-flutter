@@ -15,7 +15,7 @@ class LabelPregunta extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(50)),
         side: BorderSide(color: Colors.grey, width: 3),
       ),
-      color: Colors.white,
+      color: Colors.black,
       child: new Container(
         padding: EdgeInsets.only(right: 15, left: 15, bottom: 15, top: 15),
         constraints: BoxConstraints(maxWidth: queryData.size.width - 100),
@@ -26,7 +26,7 @@ class LabelPregunta extends StatelessWidget {
           textAlign: TextAlign.center,
           style: new TextStyle(
               fontSize: 20.0,
-              color: Colors.blue,
+              color: Colors.white,
               fontWeight: FontWeight.w400,
               fontFamily: "Roboto"),
         ),

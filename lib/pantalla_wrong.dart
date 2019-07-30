@@ -12,14 +12,14 @@ import 'database/Database.dart';
 import 'models/RespuestaModel.dart';
 
 class PantallaWrong extends StatefulWidget {
-  final partida, logRespuestas, preguntas, index;
-  PantallaWrong({Key key, @required this.partida, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);  
+  final logRespuestas, preguntas, index;
+  PantallaWrong({Key key, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);  
   @override
   _PantallaWrongState createState() => new _PantallaWrongState();
 }
 
 class _PantallaWrongState extends State<PantallaWrong> {
-  var partida, logRespuestas, preguntas, index;
+  var logRespuestas, preguntas, index;
   int _correctas = 0;
   String _textoPremio = "";  
   @override
@@ -33,7 +33,6 @@ class _PantallaWrongState extends State<PantallaWrong> {
   }
   @override
   Widget build(BuildContext context) {
-    partida = widget.partida;
     logRespuestas = widget.logRespuestas;
     preguntas = widget.preguntas;
     index = widget.index;
@@ -113,7 +112,7 @@ class _PantallaWrongState extends State<PantallaWrong> {
         curve: Curves.bounceOut,
         duration: Duration(seconds: 1),
         alignment: Alignment.topCenter,
-        child: new PantallaPregunta(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index+1)
+        child: new PantallaPregunta(logRespuestas: logRespuestas, preguntas: preguntas, index: index+1)
       ),
     );
       
@@ -126,7 +125,7 @@ class _PantallaWrongState extends State<PantallaWrong> {
           // curve: Curves.bounceOut,
           duration: Duration(seconds: 1),
           alignment: Alignment.topCenter,
-          child: new PantallaPremio(partida: partida, logRespuestas: logRespuestas, index: index, preguntas: preguntas, textoPremio: _textoPremio,),
+          child: new PantallaPremio(logRespuestas: logRespuestas, index: index, preguntas: preguntas, textoPremio: _textoPremio,),
           ),
         );
       }else{
@@ -137,7 +136,7 @@ class _PantallaWrongState extends State<PantallaWrong> {
           // curve: Curves.bounceOut,
           duration: Duration(seconds: 1),
           alignment: Alignment.topCenter,
-          child: new PantallaResultados(partidaActual: partida, logRespuestas: logRespuestas),
+          child: new PantallaResultados(logRespuestas: logRespuestas),
           ),
         );
       }      

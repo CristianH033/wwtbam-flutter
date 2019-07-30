@@ -12,14 +12,14 @@ import 'database/Database.dart';
 import 'models/RespuestaModel.dart';
 
 class PantallaTimeOut extends StatefulWidget {
-  final partida, logRespuestas, preguntas, index;
-  PantallaTimeOut({Key key, @required this.partida, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);  
+  final logRespuestas, preguntas, index;
+  PantallaTimeOut({Key key, @required this.logRespuestas, @required this.preguntas, @required this.index}) : super(key: key);  
   @override
   _PantallaTimeOutState createState() => new _PantallaTimeOutState();
 }
 
 class _PantallaTimeOutState extends State<PantallaTimeOut> {
-  var partida, logRespuestas, preguntas, index;
+  var logRespuestas, preguntas, index;
   int _correctas = 0;
   String _textoPremio = "";  
   
@@ -34,7 +34,6 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
   }
   @override
   Widget build(BuildContext context) {
-    partida = widget.partida;
     logRespuestas = widget.logRespuestas;
     preguntas = widget.preguntas;
     index = widget.index;
@@ -111,7 +110,7 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
         curve: Curves.bounceOut,
         duration: Duration(seconds: 1),
         alignment: Alignment.topCenter,
-        child: new PantallaPregunta(partida: partida, logRespuestas: logRespuestas, preguntas: preguntas, index: index+1)
+        child: new PantallaPregunta(logRespuestas: logRespuestas, preguntas: preguntas, index: index+1)
       ),
     );
       
@@ -124,7 +123,7 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
           // curve: Curves.bounceOut,
           duration: Duration(seconds: 1),
           alignment: Alignment.topCenter,
-          child: new PantallaPremio(partida: partida, logRespuestas: logRespuestas, index: index, preguntas: preguntas, textoPremio: _textoPremio,),
+          child: new PantallaPremio(logRespuestas: logRespuestas, index: index, preguntas: preguntas, textoPremio: _textoPremio,),
           ),
         );
       }else{
@@ -135,7 +134,7 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
           // curve: Curves.bounceOut,
           duration: Duration(seconds: 1),
           alignment: Alignment.topCenter,
-          child: new PantallaResultados(partidaActual: partida, logRespuestas: logRespuestas),
+          child: new PantallaResultados(logRespuestas: logRespuestas),
           ),
         );
       }      

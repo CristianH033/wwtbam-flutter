@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wwtbam_flutter/models/PartidaModel.dart';
+//import 'package:wwtbam_flutter/models/PartidaModel.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 

@@ -14,23 +14,23 @@ String preguntaToJson(Pregunta data) {
 class Pregunta {
   int id;
   String texto;
-  int puntaje;
+  String categoria;
 
   Pregunta({
     this.id,
     this.texto,
-    this.puntaje
+    this.categoria
   });
 
   factory Pregunta.fromMap(Map<String, dynamic> json) => new Pregunta(
         id: json["id"],
         texto: json["texto"],
-        puntaje: json["puntaje"]
+        categoria: json["categoria"]
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
         "texto": texto,
-        "puntaje": puntaje
+        "categoria": categoria
       };
 }
