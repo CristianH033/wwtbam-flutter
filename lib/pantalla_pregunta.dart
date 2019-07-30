@@ -36,10 +36,10 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
       CountDown cd = CountDown(Duration(seconds : tiempo));
       sub = cd.stream.listen(null);
       sub.onData((Duration d) {
-          this.setState(() {
-            tiempoRestante = d.inSeconds.toInt();
-          });
-          // print(d.inSeconds);
+        this.setState(() {
+          tiempoRestante = d.inSeconds.toInt();
+        });
+        // print(d.inSeconds);
       });
 
       sub.onDone(() {
@@ -82,9 +82,38 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
               children: <Widget>[
                 Spacer(flex: 1),
                 new Container(
-//                  height: queryData.size.height / 5,
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      // Where the linear gradient begins and ends
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      // Add one stop for each color. Stops should increase from 0 to 1
+                      stops: [0, 0.5, 1],
+                      colors: [
+                        // Colors are easy thanks to Flutter's Colors class.
+                        Colors.grey,
+                        Colors.white,
+                        Colors.grey
+                      ],
+                    ),
+                  ),
+                  width: queryData.size.width,
                   child: new Center(
-                    child: new LogoSVG(width: queryData.size.width/1.6,)
+                    // child: new LogoSVG(width: queryData.size.width/1.6,)
+                    child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            new Image.asset('assets/images/${preguntas[index].categoria}.png', width: queryData.size.width/5,),
+                            new Text(preguntas[index].categoria, style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),),
+                          ]
+                        ),
+                        new LogoSVG(width: queryData.size.width/3,)
+                      ],
+                    )
                     // child: new Image(
                     //   image:  new LogoSVG(),
                     //   width: queryData.size.width/1.6,
@@ -129,6 +158,10 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                         ),
                       ),                      
                       new BotonRespuesta(buttonPressed, respuestas.data[0]),
+                      new Container(
+                        width: 45,
+                        height: 45,
+                      )
                       // new BotonRespuesta(buttonPressed, respuestas.data[1]),
                     ],
                   )
@@ -159,6 +192,10 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                         ),
                       ),                      
                       new BotonRespuesta(buttonPressed, respuestas.data[1]),
+                      new Container(
+                        width: 45,
+                        height: 45,
+                      )
                     ],
                   )
                 ),
@@ -187,7 +224,11 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
                           ),
                         ),
                       ),                      
-                      new BotonRespuesta(buttonPressed, respuestas.data[2])
+                      new BotonRespuesta(buttonPressed, respuestas.data[2]),
+                      new Container(
+                        width: 45,
+                        height: 45,
+                      )
                     ],
                   )
                 ),

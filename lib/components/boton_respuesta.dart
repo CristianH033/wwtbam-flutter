@@ -12,7 +12,7 @@ class BotonRespuesta extends StatelessWidget {
     MediaQueryData queryData = MediaQuery.of(context);
     // Pass the text down to another widget
     return new SizedBox(
-      width: (queryData.size.width/1.2) - ((10*(queryData.size.width/2))/100),
+      width: (queryData.size.width/1.3) - ((10*(queryData.size.width/2))/100),
       // width: queryData.size.width - 50,
       // height: 70,
       child: RaisedButton(

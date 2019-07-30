@@ -79,14 +79,20 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Antenna
+      fonts:
+        - asset: fonts/Antenna-Regular.otf
+        - asset: fonts/Antenna-ExtraLight.otf
+          weight: 100
+        - asset: fonts/Antenna-Light.otf
+          weight: 200
+        - asset: fonts/Antenna-Bold.otf
+          weight: 700
+        - asset: fonts/Antenna-Black.otf
 
   assets:
     - assets/images/Calostro.png
     - assets/images/Spirulina.png
     - assets/images/MCT.png
     - assets/images/Logo.svg
-    - assets/font/Antenna-Black.otf
-    - assets/font/Antenna-Bold.otf
-    - assets/font/Antenna-Light.otf
-    - assets/font/Antenna-Regular.otf
-    - assets/font/Antenna-ExtraLight.otf

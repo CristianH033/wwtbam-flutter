@@ -6,7 +6,6 @@ import 'package:wwtbam_flutter/pantalla_pregunta.dart';
 import 'package:wwtbam_flutter/pantalla_resultados.dart';
 import 'package:wwtbam_flutter/sounds/player.dart';
 import 'components/LogoSVG.dart';
-import 'registro.dart';
 
 class PageBienvenida extends StatelessWidget {
   @override
@@ -14,6 +13,7 @@ class PageBienvenida extends StatelessWidget {
     return new MaterialApp(
       title: 'Wanapo Game',
       theme: new ThemeData(
+        fontFamily: 'Antenna',
         primarySwatch: Colors.blue,
         primaryColor: const Color(0xFF2196f3),
         accentColor: const Color(0xFF2196f3),
@@ -72,39 +72,14 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     return new Scaffold(
         resizeToAvoidBottomPadding: false,
         body: new Container(
-            decoration: BoxDecoration(
-              // color: Colors.blue,
-              image: DecorationImage(
-                image: AssetImage("assets/images/EsquinaSup.png"),
-                fit: BoxFit.none,
-                alignment: new Alignment(-1.0, -1.0),
-              ),
-              gradient: RadialGradient(
-                focalRadius: 0.5,
-                radius: 1.6,
-                colors: [
-                  Colors.white,
-                  Colors.white,
-                  Colors.grey,
-                ],
-              ),
-            ),
-            child: new Container(
-              padding: const EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                  // color: Colors.blue,
-                  image: DecorationImage(
-                image: AssetImage("assets/images/EsquinaInf.png"),
-                fit: BoxFit.none,
-                alignment: new Alignment(1.0, 1.0),
-              )),
+            
               child: new Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Spacer(flex: 1),
-                    new LogoSVG(width: queryData.size.width /1.2),
+                    new LogoSVG(width: queryData.size.width /1.6),
                     Spacer(flex: 10),
                     new Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -112,57 +87,59 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         new Container(
-                          width: queryData.size.width - 100,
-                          child: new Text("PON A PRUEBA TU CONOCIMIENTO Y SELECCIONA LAS RESPUESTAS CORRECTAS",
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              // Where the linear gradient begins and ends
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              // Add one stop for each color. Stops should increase from 0 to 1
+                              stops: [0, 0.5, 1],
+                              colors: [
+                                // Colors are easy thanks to Flutter's Colors class.
+                                Colors.grey,
+                                Colors.white,
+                                Colors.grey
+                              ],
+                            ),
+                          ),
+                          width: queryData.size.width,
+                          child: new Text("¡PON A PRUEBA TU CONOCIMIENTO!",
                              textAlign: TextAlign.center,
                              style: new TextStyle(
-                               color: Colors.blue,
+                               color: Colors.black,
                                fontSize: 28,
-                               fontWeight: FontWeight.w900
+                              //  fontWeight: FontWeight.w200
                             ),
                           )                        
                         )
                        ],
                     ),                    
                     Spacer(flex: 10),
-                    new Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        new RaisedButton(
-                          key: null,
-                          color: Colors.blue,
-                          textColor: Colors.white,
-                          onPressed: buttonPressed2,
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0)
-                          ),
-                          child: Text('Registro',
-                            style: new TextStyle(
-                                fontSize: 18
-                            ),
-                          ),
+                    new RaisedButton(
+                      key: null,
+                      color: Colors.black,
+                      textColor: Colors.white,
+                      onPressed: buttonPressed,
+                      padding: EdgeInsets.only(left: 30, right: 30, bottom: 10, top: 10),
+                      shape: new BeveledRectangleBorder(
+                        borderRadius: new BorderRadius.circular(20.0),
+                        side: BorderSide(
+                          color: Colors.grey, //Color of the border
+                          style: BorderStyle.solid, //Style of the border
+                          width: 3, //width of the border
                         ),
-                        new RaisedButton(
-                          key: null,
-                          color: Colors.blue,
-                          textColor: Colors.white,
-                          onPressed: buttonPressed,
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0)
-                          ),
-                          child: Text('Siguiente',
-                            style: new TextStyle(
-                                fontSize: 18
-                            ),
-                          ),
-                        )
-                      ],
+                      ),
+                      child: Text('JUGAR',
+                        style: new TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.w700
+                        ),
+                      ),
                     ),
-
+                    Spacer(flex: 2),
                   ]),
-            )));
+            ));
   }
 
   void buttonPressed2(){
@@ -175,58 +152,15 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   void buttonPressed() async {
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     // return object of type Dialog
-    //     return new CupertinoAlertDialog(
-    //       title: new Text("Dialog Title"),
-    //       content: new Text("This is my content"),
-    //       actions: <Widget>[
-    //         CupertinoDialogAction(
-    //           isDefaultAction: true,
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Text("Yes"),
-    //         ),
-    //         CupertinoDialogAction(
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Text("No"),
-    //         )
-    //       ],
-    //     );
-    //   },
-    // );
-
-    // Player.stop();
-
     List<Pregunta> preguntas = await DBProvider.db.getAllPreguntas();
 
     preguntas.shuffle();
 
-    // Partida partida = new Partida(
-    //   jugadorId: nuevoJugador.id
-    // );
     Player.stop();
-    // Player.playLetsPlay();
-    // Navigator.pushReplacement(
-    //   context,
-    //   PageTransition(
-    //     type: PageTransitionType.size,
-    //     curve: Curves.bounceOut,
-    //     duration: Duration(seconds: 1),
-    //     alignment: Alignment.topCenter,
-    //     child: new PantallaPregunta(logRespuestas: [], preguntas: preguntas, index: 0)
-    //   ),
-    // );
-
-
+    
     Navigator.push(
       context,
-      CupertinoPageRoute(builder: (context) => new PantallaPregunta(logRespuestas: [], preguntas: preguntas, index: 0)),
+      CupertinoPageRoute(builder: (context) => new PantallaPregunta(logRespuestas: [], preguntas: preguntas.take(4).toList(), index: 0)),
       // MaterialPageRoute(builder: (context) => Pantalla()),
     );
   }

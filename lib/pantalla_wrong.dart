@@ -61,11 +61,11 @@ class _PantallaWrongState extends State<PantallaWrong> {
                   height: queryData.size.height / 5,
                   child: new Center(
                     child: new LogoSVG(
-                      width: (queryData.size.width / 2) + 200,
+                      width: (queryData.size.width / 1.7),
                     )
                   ),
                 ),
-                Spacer(flex: 1),
+                Spacer(flex: 10),
                 CustomPaint(
                   painter: LinePainter(),
                   child: new Row(
@@ -77,21 +77,28 @@ class _PantallaWrongState extends State<PantallaWrong> {
                     ],
                   )
                 ),
-                Spacer(flex: 1),
+                Spacer(flex: 10),
                 new RaisedButton(
                   key: null,
-                  color: Colors.blue,
+                  color: Colors.black,
                   textColor: Colors.white,
                   onPressed: buttonPressed,
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0)
+                  padding: EdgeInsets.only(left: 30, right: 30, bottom: 10, top: 10),
+                  shape: new BeveledRectangleBorder(
+                    borderRadius: new BorderRadius.circular(20.0),
+                    side: BorderSide(
+                      color: Colors.grey, //Color of the border
+                      style: BorderStyle.solid, //Style of the border
+                      width: 3, //width of the border
+                    ),
                   ),
                   child: Text('Continuar',
                     style: new TextStyle(
                       fontSize: 18
                     ),
                   ),
-                )
+                ),
+                Spacer(flex: 1),
               ]
             ),
          )

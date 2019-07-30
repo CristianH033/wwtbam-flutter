@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:wwtbam_flutter/models/JugadorModel.dart';
 import 'package:wwtbam_flutter/models/PartidaModel.dart';
 import 'package:wwtbam_flutter/models/PreguntaModel.dart';
 import 'package:wwtbam_flutter/models/RespuestaModel.dart';
@@ -47,23 +46,10 @@ class DBProvider {
       onOpen: (db) {},
       onCreate: (Database db, int version) async {
         await db.execute(
-           "CREATE TABLE 'jugadores'"
-            "("
-            " 'id'         INTEGER PRIMARY KEY,"
-            " 'nombres'    varchar(255) NOT NULL ,"
-            " 'apellidos'  varchar(255) NOT NULL ,"
-            " 'correo'  varchar(255) NOT NULL ,"
-            " 'fecha_creacion'   varchar(255) NOT NULL"
-            ")"
-        );
-
-        await db.execute(
             "CREATE TABLE 'partidas'"
             "("
-            " 'id'         INTEGER PRIMARY KEY,"
-            " 'jugador_id' integer NOT NULL,"
-            " 'fecha_creacion'   varchar(255) NOT NULL,"
-            " FOREIGN KEY ('jugador_id') REFERENCES 'jugadores' ('id')"
+            " 'id'  INTEGER PRIMARY KEY,"
+            " 'fecha_creacion'  varchar(255) NOT NULL"
             ")"
         );
 
@@ -97,12 +83,6 @@ class DBProvider {
             " FOREIGN KEY ('respuesta_id') REFERENCES 'respuestas' ('id')"
             ")"
         );
-
-        // await db.execute(
-        //     "INSERT INTO jugadores"
-        //     "(id, nombres, apellidos, correo, fecha_creacion)"
-        //     "VALUES(1057015139, 'Cristian', 'Home', 'cristian_david033@hotmail.com', 0)"
-        // );
 
         await db.execute(
             "INSERT INTO preguntas"
@@ -165,79 +145,6 @@ class DBProvider {
     );
   }
 
-  // Jugador
-  newJugador(Jugador newJugador) async {
-    final db = await database;
-    var raw = await db.rawInsert(
-        "INSERT Into jugadores (id, nombres, apellidos, correo, fecha_creacion)"
-        "VALUES (?,?,?,?,?)",
-        [newJugador.id, newJugador.nombres, newJugador.apellidos, newJugador.correo, fechaNow()]);
-    return raw;
-  }
-  // newEstado(Estado newEstado) async {
-  //   final db = await database;
-  //   //get the biggest id in the table
-  //   var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Estado");
-  //   int id = table.first["id"];
-  //   //insert to the table using the new id
-  //   var raw = await db.rawInsert(
-  //       "INSERT Into Estado (id,nombre,icono)"
-  //       " VALUES (?,?,?)",
-  //       [id, newEstado.nombre, newEstado.icono]);
-  //   return raw;
-  // }
-
-  updateJugador(Jugador newJugador) async {
-    final db = await database;
-    var res = await db.update("jugadores", newJugador.toMap(),
-        where: "id = ?", whereArgs: [newJugador.id]);
-    return res;
-  }
-
-  getJugador(int id) async {
-    final db = await database;
-    var res = await db.query("jugadores", where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? Jugador.fromMap(res.first) : null;
-  }
-
-  Future<List<Jugador>> getAllJugadores() async {
-    final db = await database;
-    var res = await db.query("jugadores");
-    List<Jugador> list = res.isNotEmpty ? res.map((c) => Jugador.fromMap(c)).toList() : [];
-    return list;
-  }
-
-  deleteJugador(int id) async {
-    final db = await database;
-    return db.delete("jugadores", where: "id = ?", whereArgs: [id]);
-  }
-
-  deleteAllJugador() async {
-    final db = await database;
-    db.rawDelete("Delete * from jugadores");
-  }
-
-  // Preguntas
-  // newPerfil(Perfil newPerfil) async {
-  //   final db = await database;
-  //   //get the biggest id in the table
-  //   var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Perfil");
-  //   int id = table.first["id"];
-  //   //insert to the table using the new id
-  //   var raw = await db.rawInsert(
-  //       "INSERT Into Perfil (id, nombre)"
-  //       " VALUES (?,?)",
-  //       [id, newPerfil.nombre]);
-  //   return raw;
-  // }
-
-  // updatePerfil(Perfil newPerfil) async {
-  //   final db = await database;
-  //   var res = await db.update("Perfil", newPerfil.toMap(),
-  //       where: "id = ?", whereArgs: [newPerfil.id]);
-  //   return res;
-  // }
-
   getPregunta(int id) async {
     final db = await database;
     var res = await db.query("preguntas", where: "id = ?", whereArgs: [id]);
@@ -250,16 +157,6 @@ class DBProvider {
     List<Pregunta> list = res.isNotEmpty ? res.map((c) => Pregunta.fromMap(c)).toList() : [];
     return list;
   }
-
-  // deletePerfil(int id) async {
-  //   final db = await database;
-  //   return db.delete("Perfil", where: "id = ?", whereArgs: [id]);
-  // }
-
-  // deleteAllPerfil() async {
-  //   final db = await database;
-  //   db.rawDelete("Delete * from Perfil");
-  // }
 
   // Respuestas
   getRespuesta(int id) async {
@@ -291,9 +188,9 @@ class DBProvider {
     // print("Id de partida en DB: $id");
     //insert to the table using the new id
     var raw = await db.rawInsert(
-        "INSERT Into partidas (id, jugador_id, fecha_creacion)"
-        " VALUES (?,?,?)",
-        [id, newPartida.jugadorId, fechaNow()]);
+      "INSERT Into partidas (id, fecha_creacion)"
+      " VALUES (?,?)",
+      [id, fechaNow()]);
     return raw;
   }
 
@@ -325,7 +222,7 @@ class DBProvider {
 
   deleteAllPartidas() async {
     final db = await database;
-    db.rawDelete("Delete * from partidas");
+    db.rawDelete("Delete from partidas");
   }
 
   // Partidas
@@ -366,87 +263,8 @@ class DBProvider {
 
   deleteAllRespuestasPartidas() async {
     final db = await database;
-    db.rawDelete("Delete * from respuestas_partida");
+    db.rawDelete("Delete from respuestas_partida");
   }
-
-  // // ESTADOS PERFIL
-  // newEstadosPerfil(EstadosPerfil newEstadosPerfil) async {
-  //   final db = await database;
-  //   //get the biggest id in the table
-  //   // var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM EstadosPerfil");
-  //   // int id = table.first["id"];
-  //   //insert to the table using the new id
-  //   var raw = await db.rawInsert(
-  //       "INSERT Into EstadosPerfil (estado_id, perfil_id, activo)"
-  //       " VALUES (?,?,?)",
-  //       [newEstadosPerfil.estadoId, newEstadosPerfil.perfilId, newEstadosPerfil.activo]);
-  //   return raw;
-  // }
-
-  // activeOrDeactive(EstadosPerfil estado) async {
-  //   final db = await database;
-
-  //   EstadosPerfil activo = EstadosPerfil(
-  //       estadoId: estado.estadoId,
-  //       perfilId: estado.perfilId,        
-  //       activo: !estado.activo
-  //   );
-
-  //   var res = await db.update("EstadosPerfil", activo.toMap(),
-  //     where: "perfil_id = ? AND estado_id = ?", whereArgs: [estado.perfilId, estado.estadoId]
-  //   );
-  //   return res;
-  // }
-
-  // updateEstadosPerfil(EstadosPerfil newEstadosPerfil) async {
-  //   final db = await database;
-  //   var res = await db.update("EstadosPerfil", newEstadosPerfil.toMap(),
-  //     where: "perfil_id = ? AND estado_id = ?", whereArgs: [newEstadosPerfil.perfilId, newEstadosPerfil.estadoId]    
-  //   );
-  //   return res;
-  // }
-
-  // getEstadosPerfil(int perfilId, int estadoId) async {
-  //   final db = await database;
-  //   var res = await db.query("EstadosPerfil", where: "perfil_id = ? AND estado_id = ?", whereArgs: [perfilId, estadoId]);
-  //   return res.isNotEmpty ? EstadosPerfil.fromMap(res.first) : null;
-  // }
-
-  // Future<List<EstadosPerfil>> getBlockedEstadosPerfils() async {
-  //   final db = await database;
-
-  // print("works");
-  //   // var res = await db.rawQuery("SELECT * FROM EstadosPerfil WHERE estado=1");
-  //   var res = await db.query("EstadosPerfil", where: "activo = ? ", whereArgs: [1]);
-
-  //   List<EstadosPerfil> list = res.isNotEmpty ? res.map((c) => EstadosPerfil.fromMap(c)).toList() : [];
-  //   return list;
-  // }
-
-  // Future<List<EstadosPerfil>> getAllEstadosPerfils() async {
-  //   final db = await database;
-  //   var res = await db.query("EstadosPerfil");
-  //   List<EstadosPerfil> list = res.isNotEmpty ? res.map((c) => EstadosPerfil.fromMap(c)).toList() : [];
-  //   return list;
-  // }
-
-  // Future<List<Estado>> getTemporalPivot() async {
-  //   final db = await database;
-  //   var res = await db.query("Estado");
-  //   List<Estado> list = res.isNotEmpty ? res.map((c) => Estado.fromMap(c)).toList() : [];
-  //   return list;
-  // }
-
-  // deleteEstadosPerfil(int perfilId, int estadoId) async {
-  //   final db = await database;
-  //   return db.delete("EstadosPerfil", where: "perfil_id = ? AND estado_id = ?", whereArgs: [perfilId, estadoId]);
-  // }
-
-  // deleteAllEstadosPerfil() async {
-  //   final db = await database;
-  //   db.rawDelete("Delete * from EstadosPerfil");
-  // }
-
 
   String fechaNow(){
     var now = new DateTime.now();
