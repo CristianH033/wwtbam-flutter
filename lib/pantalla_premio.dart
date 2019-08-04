@@ -65,7 +65,7 @@ class _PantallaPremioState extends State<PantallaPremio> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new LabelPremio("Ganaste una pinza")
+                      new LabelPremio("¡GANASTE UNA PINZA MOSQUITO!")
                     ],
                   )
                 ),
