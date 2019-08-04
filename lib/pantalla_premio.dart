@@ -1,35 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:wwtbam_flutter/models/PreguntaRespuestasModel.dart';
-import 'package:wwtbam_flutter/models/RespuestaModel.dart';
+import 'package:wwtbam_flutter/components/LogoSVG.dart';
 import 'package:wwtbam_flutter/pantalla_pregunta.dart';
-import 'package:wwtbam_flutter/pantalla_premio.dart';
 import 'package:wwtbam_flutter/pantalla_resultados.dart';
 import 'package:wwtbam_flutter/sounds/player.dart';
-import 'components/LogoSVG.dart';
 import 'components/label_premio.dart';
 import 'components/line_painter.dart';
 
-class PantallaCorrecto extends StatefulWidget {
+class PantallaPremio extends StatefulWidget {
   final preguntas, index;
-  PantallaCorrecto({Key key, @required this.preguntas, @required this.index}) : super(key: key);
+  PantallaPremio({Key key, @required this.preguntas, @required this.index}) : super(key: key);  
   @override
-  _PantallaCorrectoState createState() => new _PantallaCorrectoState();
+  _PantallaPremioState createState() => new _PantallaPremioState();
 }
 
-class _PantallaCorrectoState extends State<PantallaCorrecto> {
+class _PantallaPremioState extends State<PantallaPremio> {
   var preguntas, index;
-  int _correctas = 0;
-  String _textoPremio = "";  
-  
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     Player.stop();
-    Player.playCorrect();
-    // WidgetsBinding.instance.addPostFrameCallback((_) => startUp(context));
+    Player.playCorrect();   
   }
   @override
   Widget build(BuildContext context) {
@@ -45,12 +38,11 @@ class _PantallaCorrectoState extends State<PantallaCorrecto> {
         body: new Container(
             // decoration: BoxDecoration(
             // color: Colors.black,
-              // image: DecorationImage(
-              // fit: BoxFit.cover,
-              // // alignment: new Alignment(1.0, 1.0),
-              // repeat: ImageRepeat.repeat,
-              // image: AssetImage("assets/gif/electric4.gif")
-              // ),
+            // image: DecorationImage(
+            //   fit: BoxFit.cover,
+            //   // alignment: new Alignment(1.0, 1.0),
+            //   repeat: ImageRepeat.repeat,
+            //   image: AssetImage("assets/gif/electric4.gif")),
             // ),
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -73,7 +65,7 @@ class _PantallaCorrectoState extends State<PantallaCorrecto> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      new LabelPremio("CORRECTO!")
+                      new LabelPremio("Ganaste una pinza")
                     ],
                   )
                 ),
@@ -111,54 +103,17 @@ class _PantallaCorrectoState extends State<PantallaCorrecto> {
   }
 
   void buttonPressed() {
-    if((index + 1) < preguntas.length){
-      Navigator.pushReplacement(
-        context,
-        PageTransition(
-          type: PageTransitionType.size,
-          curve: Curves.bounceOut,
-          duration: Duration(seconds: 1),
-          alignment: Alignment.topCenter,
-          child: new PantallaPregunta(preguntas: preguntas, index: index+1)
-        ),
-      );      
-    }else{
-      if(getPuntaje() == (preguntas.length * 5)){
-        Navigator.pushReplacement(
-          context,
-          PageTransition(
-            type: PageTransitionType.fade,
-            // curve: Curves.bounceOut,
-            duration: Duration(seconds: 1),
-            alignment: Alignment.topCenter,
-            child: new PantallaPremio(preguntas: preguntas, index: index),
-          ),
-        ); 
-      }else{
-        Navigator.pushReplacement(
-          context,
-          PageTransition(
-            type: PageTransitionType.fade,
-            // curve: Curves.bounceOut,
-            duration: Duration(seconds: 1),
-            alignment: Alignment.topCenter,
-            child: new PantallaResultados(preguntas: preguntas),
-          ),
-        );  
-      }  
-    }
+    Navigator.pushReplacement(
+      context,
+      PageTransition(
+        type: PageTransitionType.fade,
+        // curve: Curves.bounceOut,
+        duration: Duration(seconds: 1),
+        alignment: Alignment.topCenter,
+        child: new PantallaResultados(preguntas: preguntas),
+      ),
+    );
   }
 
-  int getPuntaje() {
-    int puntaje = 0;
-    for (PreguntaRespuestas pregunta in preguntas){
-      // print(pregunta.respuestas[0].seleccionada);
-      Respuesta seleccionada = pregunta.respuestas.where((i) => i.seleccionada).first;
-      // print(seleccionada.correcta);
-      if(seleccionada.correcta){
-        puntaje += 5;
-      }
-    }
-    return puntaje;
-  }
+  
 }

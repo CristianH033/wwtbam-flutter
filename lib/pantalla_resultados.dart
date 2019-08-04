@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:wwtbam_flutter/models/PreguntaModel.dart';
 import 'package:wwtbam_flutter/models/PreguntaRespuestasModel.dart';
+import 'package:wwtbam_flutter/models/RespuestaModel.dart';
 import 'package:wwtbam_flutter/pantalla_bienvenida.dart';
 // import 'package:wwtbam_flutter/pantalla_detalles_partida.dart';
 import 'package:wwtbam_flutter/sounds/player.dart';
@@ -65,6 +67,15 @@ class _PantallaResultadosState extends State<PantallaResultados> {
                       ,)
                     ],
                   )
+                ),
+                new Padding(
+                  padding: EdgeInsets.all(20),
+                  child: new Text("Puntaje logrado: "+getPuntaje().toString(), 
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 25,
+                    ),
+                  ),
                 ),
                 // Spacer(flex: 1),
                 new Expanded(
@@ -166,6 +177,19 @@ class _PantallaResultadosState extends State<PantallaResultados> {
 
   bool _allow() {
     return true;
+  }
+
+  int getPuntaje() {
+    int puntaje = 0;
+    for (PreguntaRespuestas pregunta in preguntas){
+      // print(pregunta.respuestas[0].seleccionada);
+      Respuesta seleccionada = pregunta.respuestas.where((i) => i.seleccionada).first;
+      // print(seleccionada.correcta);
+      if(seleccionada.correcta){
+        puntaje += 5;
+      }
+    }
+    return puntaje;
   }
 
   Future<List<PreguntaRespuestas>> getPreguntasRespuestas() async{

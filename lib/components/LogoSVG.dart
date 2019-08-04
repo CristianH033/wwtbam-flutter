@@ -8,7 +8,7 @@ class LogoSVG extends StatelessWidget {
   // a constructor for this class
   final width;
   final height;
-  LogoSVG({Key key, @required this.width, @required this.height}) : super(key: key);
+  LogoSVG({Key key, @required this.width, this.height}) : super(key: key);
   // LogoSVG();
 
   Widget build(context) {
