@@ -150,7 +150,7 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
     int puntaje = 0;
     for (PreguntaRespuestas pregunta in preguntas){
       // print(pregunta.respuestas[0].seleccionada);
-      Respuesta seleccionada = pregunta.respuestas.where((i) => i.seleccionada).first;
+      Respuesta seleccionada = pregunta.respuestas.firstWhere((i) => i.seleccionada, orElse: () => new Respuesta(correcta: false));
       // print(seleccionada.correcta);
       if(seleccionada.correcta){
         puntaje += 5;
