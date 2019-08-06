@@ -219,6 +219,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
     ] ));
 
+    preguntas.forEach((pregunta) => pregunta.respuestas.shuffle());
     preguntas.shuffle();
 
     Player.stop();

@@ -62,7 +62,7 @@ class _PantallaPreguntaState extends State<PantallaPregunta> {
     preguntas = widget.preguntas;
     index = widget.index;
     MediaQueryData queryData = MediaQuery.of(context);
-    w = (queryData.size.width * ((tiempoRestante*100)/32))/100;
+    w = ((queryData.size.width - (queryData.size.width/10)) * ((tiempoRestante*100)/32))/100;
     return new WillPopScope(
       key: null,
       onWillPop: () {
