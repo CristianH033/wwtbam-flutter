@@ -2,10 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:wwtbam_flutter/components/label_wrong.dart';
-import 'package:wwtbam_flutter/models/PreguntaRespuestasModel.dart';
-import 'package:wwtbam_flutter/models/RespuestaModel.dart';
 import 'package:wwtbam_flutter/pantalla_pregunta.dart';
-import 'package:wwtbam_flutter/pantalla_premio.dart';
 import 'package:wwtbam_flutter/pantalla_resultados.dart';
 import 'package:wwtbam_flutter/sounds/player.dart';
 import 'components/LogoSVG.dart';
@@ -19,9 +16,7 @@ class PantallaTimeOut extends StatefulWidget {
 }
 
 class _PantallaTimeOutState extends State<PantallaTimeOut> {
-  var preguntas, index;
-  int _correctas = 0;
-  String _textoPremio = "";  
+  var preguntas, index; 
   
   @override
   void initState() {
@@ -120,19 +115,7 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
         ),
       );      
     }else{
-      if(getPuntaje() ==  (preguntas.length * 5)){
-        Navigator.pushReplacement(
-          context,
-          PageTransition(
-            type: PageTransitionType.fade,
-            // curve: Curves.bounceOut,
-            duration: Duration(seconds: 1),
-            alignment: Alignment.topCenter,
-            child: new PantallaPremio(preguntas: preguntas, index: index),
-          ),
-        ); 
-      }else{
-        Navigator.pushReplacement(
+      Navigator.pushReplacement(
           context,
           PageTransition(
             type: PageTransitionType.fade,
@@ -142,20 +125,6 @@ class _PantallaTimeOutState extends State<PantallaTimeOut> {
             child: new PantallaResultados(preguntas: preguntas),
           ),
         );  
-      }  
-    }
-  }
-
-  int getPuntaje() {
-    int puntaje = 0;
-    for (PreguntaRespuestas pregunta in preguntas){
-      // print(pregunta.respuestas[0].seleccionada);
-      Respuesta seleccionada = pregunta.respuestas.firstWhere((i) => i.seleccionada, orElse: () => new Respuesta(correcta: false));
-      // print(seleccionada.correcta);
-      if(seleccionada.correcta){
-        puntaje += 5;
       }
-    }
-    return puntaje;
   }
 }

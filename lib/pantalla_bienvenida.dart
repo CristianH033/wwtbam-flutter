@@ -225,7 +225,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     
     Navigator.push(
       context,
-      CupertinoPageRoute(builder: (context) => new PantallaPregunta(preguntas: preguntas.take(4).toList(), index: 0)),
+      CupertinoPageRoute(builder: (context) => new PantallaPregunta(preguntas: preguntas, index: 0)),
       // MaterialPageRoute(builder: (context) => Pantalla()),
     );
   }
