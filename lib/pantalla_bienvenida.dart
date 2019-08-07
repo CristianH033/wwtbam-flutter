@@ -219,7 +219,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
     ] ));
 
-    preguntas.forEach((pregunta) => pregunta.respuestas.shuffle());
+    preguntas.forEach((pregunta) => (){
+      if( ![4,8,12].contains(pregunta.id) ){
+        pregunta.respuestas.shuffle();
+      } 
+    });
+      
     preguntas.shuffle();
 
     Player.stop();
